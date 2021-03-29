@@ -1,0 +1,12 @@
+{
+    "workbench.iconTheme": "vscode-icons",
+    "extensions.autoUpdate": false,
+    "workbench.colorTheme": "Default Dark+",
+    "vsicons.dontShowNewVersionMessage": true,
+    "files.autoSaveDelay": 1,
+    "files.exclude": {
+        "**/.virtual_documents": true,
+        "**/.ipynb*": true,
+        "**/.vscode": true
+    }
+}

@@ -1,0 +1,3 @@
+#!/usr/bin/with-contenv bash
+
+exec jupyter-lab --ip 0.0.0.0 --no-browser --autoreload --allow-root --notebook-dir /home/jovyan/workspace

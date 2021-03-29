@@ -1,0 +1,7 @@
+{
+    "python.linting.pylintEnabled": true,
+    "python.linting.flake8Enabled": true,
+    "python.linting.enabled": true,
+    "files.autoSaveDelay": 1,
+    "python.dataScience.jupyterServerURI": "http://localhost:8888/jupyter"
+}

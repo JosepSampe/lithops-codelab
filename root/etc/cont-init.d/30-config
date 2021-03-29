@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv bash
+
+rm -rf /home/jovyan/work
+mkdir -p /home/jovyan/{extensions,data,workspace,.ssh}
+

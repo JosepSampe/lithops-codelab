@@ -1,0 +1,67 @@
+server {
+    listen 8080;
+    location = /code {
+      rewrite ^/(.*)$ $1/ permanent;
+      port_in_redirect off;
+      server_name_in_redirect off;
+      #absolute_redirect off;
+    }
+    location /code/ {
+      proxy_pass         http://localhost:8443/;
+      #rewrite /code/(.*) /$1  break;
+
+      proxy_set_header   Upgrade           $http_upgrade;
+      proxy_set_header   Connection        upgrade;
+      proxy_set_header   Accept-Encoding   gzip;
+      proxy_set_header   Host              $host;
+
+    }
+
+    location = /jupyter {
+      rewrite ^/(.*)$ $1/ permanent;
+    }
+    location /jupyter {
+      error_page 403 = @proxy_jupyter;
+      deny 127.0.0.1;
+      allow all;
+      # set a webroot, if there is one
+      root /some-webroot;
+      try_files $uri @proxy_jupyter;
+    }
+    location @proxy_jupyter {
+      #rewrite /jupyter(.*) $1  break;
+      proxy_read_timeout 300s;
+      proxy_pass http://upstream_jupyter;
+      # pass some extra stuff to the backend
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-Ip $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+    location ~ /jupyter/api/kernels/ {
+            proxy_pass            http://upstream_jupyter;
+            proxy_set_header      Host $host;
+            # websocket support
+            proxy_http_version    1.1;
+            proxy_set_header      Upgrade "websocket";
+            proxy_set_header      Connection "Upgrade";
+            proxy_read_timeout    86400;
+    }
+    location ~ /jupyter/terminals/ {
+            proxy_pass            http://upstream_jupyter;
+            proxy_set_header      Host $host;
+            # websocket support
+            proxy_http_version    1.1;
+            proxy_set_header      Upgrade "websocket";
+            proxy_set_header      Connection "Upgrade";
+            proxy_read_timeout    86400;
+    }
+    location ~ /jupyter/lsp/ws/ {
+            proxy_pass            http://upstream_jupyter;
+            proxy_set_header      Host $host;
+            # websocket support
+            proxy_http_version    1.1;
+            proxy_set_header      Upgrade "websocket";
+            proxy_set_header      Connection "Upgrade";
+            proxy_read_timeout    86400;
+    }
+}
