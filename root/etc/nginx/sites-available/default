@@ -1,5 +1,5 @@
 server {
-    listen 8080;
+    listen 80;
     location = /code {
       rewrite ^/(.*)$ $1/ permanent;
       port_in_redirect off;
