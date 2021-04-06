@@ -71,5 +71,6 @@ RUN pip3 uninstall lithops -y; pip3 install -U git+https://github.com/lithops-cl
 # add local files
 COPY /root/home/ /home/
 COPY /root/etc/ /etc/
+COPY /root/usr/ /usr/
 
 ENTRYPOINT ["/init"]
