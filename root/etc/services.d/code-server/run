@@ -13,6 +13,8 @@ else
   PROXY_DOMAIN_ARG="--proxy-domain=${CODE_PROXY_DOMAIN}"
 fi
 
+unset PORT
+
 exec /usr/bin/code-server \
 		--bind-addr 0.0.0.0:8443 \
 		--user-data-dir /home/jovyan/data \

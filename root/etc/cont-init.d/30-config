@@ -3,3 +3,8 @@
 rm -rf /home/jovyan/work
 mkdir -p /home/jovyan/{extensions,data,workspace,.ssh}
 
+echo -n $(python -c 'from notebook.auth import passwd; import os; print(passwd(os.environ["CODELAB_PASSWORD"], algorithm="sha1"))') > /var/run/s6/container_environment/JUPYTERLAB_PASSWORD
+echo -n $(echo -n "$CODELAB_PASSWORD" | sha256sum | cut -d' ' -f1) > /var/run/s6/container_environment/HASHED_PASSWORD
+echo -n "$CODELAB_S3_ACCESS_KEY_ID" > /var/run/s6/container_environment/JUPYTERLAB_S3_ACCESS_KEY_ID
+echo -n "$CODELAB_S3_SECRET_ACCESS_KEY" > /var/run/s6/container_environment/JUPYTERLAB_S3_SECRET_ACCESS_KEY
+echo -n "$CODELAB_S3_ENDPOINT" > /var/run/s6/container_environment/JUPYTERLAB_S3_ENDPOINT
